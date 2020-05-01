@@ -1,6 +1,8 @@
-﻿using GraphQL.Types;
+﻿using graph.simplify.core.enums;
+using GraphQL.Types;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -8,17 +10,107 @@ namespace graph.simplify.core.queries
 {
     internal class ExpressionFactory<TEntity> where TEntity : class
     {
-        public static Expression<Func<TEntity, bool>> Factory(List<QueryArgument> arguments)
+        private static BinaryExpression GetStatement(Statement connector, Expression left, Expression right)
         {
-            //var parameter = Expression.Parameter(typeof(Notify), "x");
-            //var member = Expression.Property(parameter, "ToUser");
-            //var constant = Expression.Constant(toUser);
-            //var body = Expression.Equal(member, constant); //x.Id >= 3
+            switch (connector)
+            {
+                case Statement.And:
+                    return Expression.And(left, right);
+                case Statement.Or:
+                    return Expression.Or(left, right);
+                default:
+                    return Expression.And(left, right);
+            }
+        }
 
-            //ParameterExpression param = Expression.Parameter(typeof(Notify), "ToUser");
-            //var finalExpression = Expression.Lambda<Func<Notify, bool>>(body, parameter); //x => x.Id >= 3
+        private static BinaryExpression GetOperation(Operation operation, Expression member, Expression constant)
+        {
+            BinaryExpression getContains(bool contain)
+            {
+                var method = typeof(string).GetMethod("Contains", new Type[] { typeof(string) });
+                var arguments = new Expression[] { constant };
+                var call = Expression.Call(member, method, arguments);
+                return Expression.Equal(call, Expression.Constant(contain));
+            }
 
-            throw new NotImplementedException();
+            BinaryExpression getStartWith(bool startsWith)
+            {
+                var method = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
+                var arguments = new Expression[] { constant };
+                var call = Expression.Call(member, method, arguments);
+                return Expression.Equal(call, Expression.Constant(startsWith));
+            }
+
+            BinaryExpression getEndsWith(bool endsWith)
+            {
+                var method = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
+                var arguments = new Expression[] { constant };
+                var call = Expression.Call(member, method, arguments);
+                return Expression.Equal(call, Expression.Constant(endsWith));
+            }
+
+            //BinaryExpression getEndsWith(bool endsWith)
+            //{
+            //    var method = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
+            //    var arguments = new Expression[] { constant };
+            //    var call = Expression.Call(member, method, arguments);
+            //    return Expression.Equal(call, Expression.Constant(endsWith));
+            //}
+
+            switch (operation)
+            {
+                case Operation.EqualTo:
+                    return Expression.Equal(member, constant);
+                case Operation.Contains:
+                    return getContains(true);
+                case Operation.NotContains:
+                    return getContains(false);
+                case Operation.StartsWith:
+                    return getStartWith(true);
+                case Operation.NotStartsWith:
+                    return getStartWith(false);
+                case Operation.EndsWith:
+                    return getEndsWith(true);
+                case Operation.NotEndsWith:
+                    return getEndsWith(false);
+                //case Operation.IsNullOrWhiteSpace:
+                //    return getIsNullOrWhiteSpace(true);
+                case Operation.NotEqualTo:
+                    return Expression.NotEqual(member, constant);
+                case Operation.GreaterThan:
+                    return Expression.GreaterThan(member, constant);
+                case Operation.GreaterThanOrEqualTo:
+                    return Expression.GreaterThanOrEqual(member, constant);
+                case Operation.LessThan:
+                    return Expression.LessThan(member, constant);
+                case Operation.LessThanOrEqualTo:
+                    return Expression.LessThanOrEqual(member, constant);
+                default:
+                    return Expression.Equal(member, constant);
+            }
+        }
+
+        public static Expression<Func<TEntity, bool>> Factory(ResolveFieldContext<object> context)
+        {
+            var parameter = Expression.Parameter(typeof(TEntity), "p");
+            var body = Expression.Equal(Expression.Constant(true), Expression.Constant(true));
+
+            foreach (var argument in context.Arguments)
+            {
+                var fieldName = argument.Key;
+                var fieldValue = argument.Value as Dictionary<string, object>;
+                var operation = (Operation)Convert.ChangeType(fieldValue["operation"], typeof(Operation));
+                var statement = (Statement)Convert.ChangeType(fieldValue["connector"], typeof(Statement));
+                var value = Convert.ChangeType(fieldValue["value"], fieldValue["value"]?.GetType());
+
+                var member = Expression.Property(parameter, fieldName);
+                var constant = Expression.Constant(value);
+
+                body = GetStatement(statement, body, GetOperation(operation, member, constant));   
+            }
+
+            var finalExpression = Expression.Lambda<Func<TEntity, bool>>(body, parameter);
+            return finalExpression;
         }
     }
 }

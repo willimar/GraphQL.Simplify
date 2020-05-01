@@ -28,7 +28,7 @@ namespace graph.simplify.api
 
             StartupResolve.ConfigureServices(services);
             services.AddScoped<IGraphQLExecuter<AppScheme<SampleQuery>>, DefaultGraphQLExecuter<AppScheme<SampleQuery>>>();
-            //services.AddScoped<SampleRepository>();
+            services.AddScoped<SampleRepository>();
             services.AddScoped<SampleQuery>();
             services.AddScoped<SampleType>();
             services.AddScoped<AppScheme<SampleQuery>>();

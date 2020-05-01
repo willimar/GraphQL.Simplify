@@ -12,11 +12,8 @@ namespace graph.simplify.api.Queries
 {
     public class SampleQuery : AppQuery<Sample, SampleType>
     {
-        //public SampleQuery(SampleRepository repository) : base(repository)
-        //{
-        //}
-        public SampleQuery() : base(null)
+        public SampleQuery(SampleRepository repository) : base(repository)
         {
-        }
+        }        
     }
 }

@@ -16,7 +16,7 @@ namespace graph.simplify.core.queries
                 arguments: new QueryArguments(arguments),
                 resolve: context =>
                 {
-                    return null; // repository.GetData(ExpressionFactory<TEntity>.Factory(arguments));
+                    return repository.GetData(ExpressionFactory<TEntity>.Factory(context));
                 });
         }
     }

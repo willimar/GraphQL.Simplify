@@ -15,13 +15,16 @@ namespace graph.simplify.core.enums
         GreaterThanOrEqualTo = 7,
         LessThan = 8,
         LessThanOrEqualTo = 9,
-        Between = 10,
-        IsNull = 11,
-        IsEmpty = 12,
+        NotContains = 10,
+        NotStartsWith = 11,
+        NotEndsWith = 12,
+        //Between = 10,
+        //IsNull = 11,
+        //IsEmpty = 12,
         IsNullOrWhiteSpace = 13,
-        IsNotNull = 14,
-        IsNotEmpty = 15,
-        IsNotNullNorWhiteSpace = 16,
-        In = 17
+        //IsNotNull = 14,
+        //IsNotEmpty = 15,
+        //IsNotNullNorWhiteSpace = 16,
+        //In = 17
     }
 }
