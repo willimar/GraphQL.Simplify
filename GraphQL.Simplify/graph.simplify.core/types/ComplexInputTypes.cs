@@ -36,6 +36,10 @@ namespace graph.simplify.core.types
                 {
                     Field<EnumeratorType<Statement>>(item.Name);
                 }
+                else if (item.PropertyType.Equals(typeof(Order)))
+                {
+                    Field<EnumeratorType<Order>>(item.Name);
+                }
                 else if (item.PropertyType.BaseType.Equals(typeof(Enum)))
                 {
                     Field<IntGraphType>(item.Name);

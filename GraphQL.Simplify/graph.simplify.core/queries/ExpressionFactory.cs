@@ -97,16 +97,34 @@ namespace graph.simplify.core.queries
 
             foreach (var argument in context.Arguments)
             {
-                var fieldName = argument.Key;
-                var fieldValue = argument.Value as Dictionary<string, object>;
-                var operation = (Operation)Convert.ChangeType(fieldValue["operation"], typeof(Operation));
-                var statement = (Statement)Convert.ChangeType(fieldValue["connector"], typeof(Statement));
-                var value = Convert.ChangeType(fieldValue["value"], fieldValue["value"]?.GetType());
+                if (!argument.Key.Equals("queryInfo"))
+                {
+                    var fieldName = argument.Key;
+                    var requirementList = argument.Value as List<object>;
 
-                var member = Expression.Property(parameter, fieldName);
-                var constant = Expression.Constant(value);
+                    foreach (var item in requirementList)
+                    {
+                        var fieldValue = item as Dictionary<string, object>;
+                        var order = Order.none;
 
-                body = GetStatement(statement, body, GetOperation(operation, member, constant));   
+                        if (fieldValue.ContainsKey("order"))
+                        {
+                            order = (Order)Convert.ChangeType(fieldValue["order"], typeof(Order));
+                        }
+
+                        if (order == Order.none)
+                        {
+                            var operation = (Operation)Convert.ChangeType(fieldValue["operation"], typeof(Operation));
+                            var statement = (Statement)Convert.ChangeType(fieldValue["connector"], typeof(Statement));
+                            var value = Convert.ChangeType(fieldValue["value"], fieldValue["value"]?.GetType());
+
+                            var member = Expression.Property(parameter, fieldName);
+                            var constant = Expression.Constant(value);
+
+                            body = GetStatement(statement, body, GetOperation(operation, member, constant));
+                        }
+                    }
+                }
             }
 
             var finalExpression = Expression.Lambda<Func<TEntity, bool>>(body, parameter);

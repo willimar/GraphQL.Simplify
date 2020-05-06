@@ -17,8 +17,10 @@ namespace graph.simplify.core.queries
 
             void addArgument<TField>(string name) where TField : class
             {
-                arquments.Add(new QueryArgument<ComplexInputTypes<TField>> { Name = name });
+                arquments.Add(new QueryArgument<ListGraphType<ComplexInputTypes<TField>>> { Name = name });
             }
+
+            addArgument<QueryInfoValue>("QueryInfo");
 
             foreach (var item in properties)
             {
@@ -65,6 +67,10 @@ namespace graph.simplify.core.queries
                 else if (item.PropertyType.Equals(typeof(Operation)))
                 {
                     addArgument<OperationValue>(item.Name);
+                }
+                else if (item.PropertyType.Equals(typeof(Order)))
+                {
+                    addArgument<OrderValue>(item.Name);
                 }
                 else if (item.PropertyType.Equals(typeof(bool)))
                 {
