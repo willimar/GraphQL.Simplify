@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "graph.simplify.core", "graph.simplify.core\graph.simplify.core.csproj", "{7050C42F-DE17-4A18-B302-E77240B7D17C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "graph.simplify.core", "graph.simplify.core\graph.simplify.core.csproj", "{7050C42F-DE17-4A18-B302-E77240B7D17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "graph.simplify.api", "graph.simplify.api\graph.simplify.api.csproj", "{E99B85B9-39A9-485D-BEFB-20DE7DC60ED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "graph.simplify.api", "graph.simplify.api\graph.simplify.api.csproj", "{E99B85B9-39A9-485D-BEFB-20DE7DC60ED0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "graph.simplify.consumer", "graph.simplify.consumer\graph.simplify.consumer.csproj", "{ABFEED5F-C558-4410-A7B2-C730D7BD01C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "graph.simplify.test", "graph.simplify.test\graph.simplify.test.csproj", "{F5241FD7-0577-4714-B1D6-4ACD8BBCC510}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{E99B85B9-39A9-485D-BEFB-20DE7DC60ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E99B85B9-39A9-485D-BEFB-20DE7DC60ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E99B85B9-39A9-485D-BEFB-20DE7DC60ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABFEED5F-C558-4410-A7B2-C730D7BD01C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFEED5F-C558-4410-A7B2-C730D7BD01C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFEED5F-C558-4410-A7B2-C730D7BD01C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFEED5F-C558-4410-A7B2-C730D7BD01C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5241FD7-0577-4714-B1D6-4ACD8BBCC510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5241FD7-0577-4714-B1D6-4ACD8BBCC510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5241FD7-0577-4714-B1D6-4ACD8BBCC510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5241FD7-0577-4714-B1D6-4ACD8BBCC510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
