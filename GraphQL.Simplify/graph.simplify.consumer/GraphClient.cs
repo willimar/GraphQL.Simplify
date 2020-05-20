@@ -5,9 +5,9 @@ using System.Text;
 
 namespace graph.simplify.consumer
 {
-    public class GraphClient<TEntity> where TEntity : class
+    public class GraphClient 
     {
-        public IBody<TEntity> Body { get; private set; }
+        public IBody Body { get; private set; }
         public IQueryInfo QueryInfo { get; private set; }
         public int TimeOut { get; set; }
         public dynamic Result { get; private set; }
@@ -24,9 +24,9 @@ namespace graph.simplify.consumer
             }
         }
 
-        public GraphClient()
+        public GraphClient(string name)
         {
-            this.Body = new BodyAbs<TEntity>();
+            this.Body = new BodyAbs(name);
             this.QueryInfo = new QueryInfoAbs();
             this.TimeOut = 1000 * 30;
         }

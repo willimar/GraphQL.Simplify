@@ -15,7 +15,7 @@ namespace graph.simplify.test
         [Fact]
         public void GraphClientTest()
         {
-            var client = new GraphClient<Address>();
+            var client = new GraphClient("Address");
 
             client.Body.AppendArgument("PostalCode")
                 .AppendCheck(OperationType.EqualTo, Statement.And, "36038-000")

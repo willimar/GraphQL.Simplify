@@ -4,8 +4,9 @@ using System.Text;
 
 namespace graph.simplify.consumer
 {
-    public interface IBody<TEntity> where TEntity : class
+    public interface IBody 
     {
+        string Name { get; }
         IQueryInfo QueryInfo { get; }
         List<IArgument> Arguments { get; }
         List<string> ResultFields { get; }

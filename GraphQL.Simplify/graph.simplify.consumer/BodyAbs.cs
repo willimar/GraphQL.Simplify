@@ -5,8 +5,9 @@ using System.Text;
 
 namespace graph.simplify.consumer
 {
-    internal class BodyAbs<TEntity> : IBody<TEntity> where TEntity : class
+    internal class BodyAbs : IBody
     {
+        public string Name { get; private set; }
         public IQueryInfo QueryInfo { get; private set; }
 
         public List<IArgument> Arguments { get; private set; }
@@ -17,22 +18,18 @@ namespace graph.simplify.consumer
 
         public IArgument AppendArgument(string name)
         {
-            if (!typeof(TEntity).GetProperties().Any(x => x.Name.ToUpper().Equals(name.ToUpper())))
-            {
-                throw new ArgumentException("The property not found.", name);
-            }
-
             var argument = new ArgumentAbs(name);
             this.Arguments.Add(argument);
 
             return argument;
         }
 
-        public BodyAbs()
+        public BodyAbs(string name)
         {
             this.ResultFields = new List<string>();
             this.Arguments = new List<IArgument>();
             this.QueryInfo = new QueryInfoAbs();
+            this.Name = name;
 
             this.StringFormat = new List<Type>() { 
                 typeof(string)
@@ -44,7 +41,7 @@ namespace graph.simplify.consumer
             string body = "{@entity(queryInfo:{limit: @limit, page: @page}@arguments){@fieldList}}";
             string arguments = this.GetArguments();
 
-            body = body.Replace("@entity", GetName(typeof(TEntity).Name));
+            body = body.Replace("@entity", GetName(this.Name));
             body = body.Replace("@limit", this.QueryInfo.Limit.ToString());
             body = body.Replace("@page", this.QueryInfo.Page.ToString());
             body = body.Replace("@arguments", string.IsNullOrWhiteSpace(arguments)? string.Empty : $",{arguments}");

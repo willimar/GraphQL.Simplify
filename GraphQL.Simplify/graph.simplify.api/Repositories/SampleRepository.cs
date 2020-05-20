@@ -1,4 +1,5 @@
-﻿using crud.api.core.interfaces;
+﻿using crud.api.core.enums;
+using crud.api.core.interfaces;
 using crud.api.core.repositories;
 using graph.simplify.api.Entities;
 using System;
@@ -15,11 +16,11 @@ namespace graph.simplify.api.Repositories
 
         public string Message { get; }
 
-        public int Code { get; }
+        public HandlesCode Code { get; }
 
         public List<string> StackTrace { get; }
 
-        public HandleMessageAbs(string message, string type, int code)
+        public HandleMessageAbs(string message, string type, HandlesCode code)
         {
             Message = message;
             MessageType = type;
@@ -199,13 +200,13 @@ namespace graph.simplify.api.Repositories
         public IEnumerable<IHandleMessage> AppenData(Sample entity)
         {
             this._samples.Add(entity);
-            return new List<IHandleMessage>() { new HandleMessageAbs("Temporary inserted data.", "InsertDataSuccess", 202) };
+            return new List<IHandleMessage>() { new HandleMessageAbs("Temporary inserted data.", "InsertDataSuccess", HandlesCode.Accepted) };
         }
 
         public IEnumerable<IHandleMessage> DeleteData(Sample entity)
         {
             this._samples.Remove(entity);
-            return new List<IHandleMessage>() { new HandleMessageAbs("Deleted data.", "DeletedDataSuccess", 202) };
+            return new List<IHandleMessage>() { new HandleMessageAbs("Deleted data.", "DeletedDataSuccess", HandlesCode.Accepted) };
         }
 
         public void Dispose()
@@ -213,7 +214,7 @@ namespace graph.simplify.api.Repositories
             _samples.Clear();
         }
 
-        public IEnumerable<Sample> GetData(Expression<Func<Sample, bool>> func, int top = 0)
+        public IEnumerable<Sample> GetData(Expression<Func<Sample, bool>> func, int top = 0, int page = 0)
         {
             return _samples.ToList().Where(func.Compile());
         }
