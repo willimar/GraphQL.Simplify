@@ -2,10 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1.2</Version>
+    <Authors>Rocha, Willimar</Authors>
+    <Copyright>Willimar 2020 ©</Copyright>
+    <PackageProjectUrl>https://github.com/willimar/GraphQL.Simplify</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Lib to use with GraphQL Simplify. Will facilite use of the API search</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Swagger.Simplify\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
