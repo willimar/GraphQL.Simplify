@@ -219,6 +219,11 @@ namespace graph.simplify.api.Repositories
             return _samples.ToList().Where(func.Compile());
         }
 
+        public IEnumerable<Sample> GetData(Expression<Func<Sample, bool>> func, List<Expression<Func<Sample, object>>> sortFields, int top = 0, int page = 0)
+        {
+            return _samples.ToList().Where(func.Compile());
+        }
+
         public IEnumerable<IHandleMessage> UpdateData(Sample entity, Expression<Func<Sample, bool>> predicate)
         {
             throw new NotImplementedException();

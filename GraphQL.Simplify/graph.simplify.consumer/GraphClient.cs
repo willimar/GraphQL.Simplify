@@ -1,4 +1,6 @@
-﻿using System;
+﻿using graph.simplify.consumer.abstractions;
+using graph.simplify.consumer.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -7,8 +9,7 @@ namespace graph.simplify.consumer
 {
     public class GraphClient 
     {
-        public IBody Body { get; private set; }
-        public IQueryInfo QueryInfo { get; private set; }
+        public List<IBody> Body { get; private set; }
         public int TimeOut { get; set; }
         public dynamic Result { get; private set; }
 
@@ -16,7 +17,9 @@ namespace graph.simplify.consumer
         {
             using (var navigator = new HttpClient())
             {
-                var body = $"{{\"operationName\":null,\"variables\":{{}},\"query\":\"{this.Body}\"}}";
+                var bodyValue = string.Join(",", this.Body);
+
+                var body = $"{{\"operationName\":null,\"variables\":{{}},\"query\":\"{{{bodyValue}}}\"}}";
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
                 var post = navigator.PostAsync(uri, content);
                 post.Wait(this.TimeOut);
@@ -24,10 +27,16 @@ namespace graph.simplify.consumer
             }
         }
 
-        public GraphClient(string name)
+        public IBody AppendBody(string name)
         {
-            this.Body = new BodyAbs(name);
-            this.QueryInfo = new QueryInfoAbs();
+            var body = new BodyAbs(name);
+            this.Body.Add(body);
+            return body;
+        }
+
+        public GraphClient()
+        {
+            this.Body = new List<IBody>();
             this.TimeOut = 1000 * 30;
         }
     }

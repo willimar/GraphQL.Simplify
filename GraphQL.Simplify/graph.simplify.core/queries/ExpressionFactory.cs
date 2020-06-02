@@ -8,7 +8,7 @@ using System.Text;
 
 namespace graph.simplify.core.queries
 {
-    internal class ExpressionFactory<TEntity> where TEntity : class
+    public class ExpressionFactory<TEntity> where TEntity : class
     {
         private static BinaryExpression GetStatement(Statement connector, Expression left, Expression right)
         {

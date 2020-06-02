@@ -35,7 +35,10 @@ namespace graph.simplify.core.queries
                         }
                     }
 
-                    return repository.GetData(ExpressionFactory<TEntity>.Factory(context), top: limit, page: page);
+                    var where = ExpressionFactory<TEntity>.Factory(context);
+                    var orderFields = OrderFactory<TEntity>.Factory(context);
+
+                    return repository.GetData(where, orderFields, limit, page);
                 });
         }
     }

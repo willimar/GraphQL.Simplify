@@ -8,7 +8,7 @@ using System.Text;
 
 namespace graph.simplify.core.queries
 {
-    internal class ArgumentFactory
+    public class ArgumentFactory
     {
         public static List<QueryArgument> Factory<TType>() where TType : class
         {

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using graph.simplify.consumer.enums;
+using graph.simplify.consumer.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace graph.simplify.consumer
+namespace graph.simplify.consumer.abstractions
 {
     internal class ArgumentAbs : IArgument
     {
@@ -12,10 +14,22 @@ namespace graph.simplify.consumer
 
         public IArgument AppendCheck(OperationType operation, Statement connector, object value)
         {
-            this.Checks.Add(new CheckAbs() { 
+            this.Checks.Add(new CheckAbs()
+            {
                 Connector = connector,
                 Operation = operation,
-                Value = value
+                Value = value,
+                Order = Order.none
+            });
+
+            return this;
+        }
+
+        public IArgument AppendCheck(Order order)
+        {
+            this.Checks.Add(new CheckAbs()
+            {
+                Order = order
             });
 
             return this;

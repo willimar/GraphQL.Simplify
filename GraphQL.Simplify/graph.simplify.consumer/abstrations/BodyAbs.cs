@@ -1,9 +1,11 @@
-﻿using System;
+﻿using graph.simplify.consumer.enums;
+using graph.simplify.consumer.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace graph.simplify.consumer
+namespace graph.simplify.consumer.abstractions
 {
     internal class BodyAbs : IBody
     {
@@ -38,7 +40,7 @@ namespace graph.simplify.consumer
 
         public override string ToString()
         {
-            string body = "{@entity(queryInfo:{limit: @limit, page: @page}@arguments){@fieldList}}";
+            string body = "@entity(queryInfo:{limit: @limit, page: @page}@arguments){@fieldList}";
             string arguments = this.GetArguments();
 
             body = body.Replace("@entity", GetName(this.Name));
@@ -70,15 +72,18 @@ namespace graph.simplify.consumer
         private string GetChecks(IArgument argument)
         {
             const string operation = "{operation: @operation, connector: @connector, value: @value}";
+            const string order = "{order: @order}";
+
             var result = new List<string>();
 
             foreach (var item in argument.Checks)
             {
-                var checkList = operation;
+                var checkList = item.Order == Order.none ? operation : order;
 
                 checkList = checkList.Replace("@operation", item.Operation.ToString());
                 checkList = checkList.Replace("@connector", item.Connector.ToString());
                 checkList = checkList.Replace("@value", GetValue(item.Value));
+                checkList = checkList.Replace("@order", item.Order.ToString());
 
                 result.Add(checkList);
             }

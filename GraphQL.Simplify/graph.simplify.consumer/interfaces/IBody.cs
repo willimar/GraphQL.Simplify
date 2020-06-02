@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace graph.simplify.consumer
+namespace graph.simplify.consumer.interfaces
 {
     public interface IBody 
     {

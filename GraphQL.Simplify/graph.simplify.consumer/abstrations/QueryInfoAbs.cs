@@ -1,8 +1,9 @@
-﻿using System;
+﻿using graph.simplify.consumer.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace graph.simplify.consumer
+namespace graph.simplify.consumer.abstractions
 {
     internal class QueryInfoAbs : IQueryInfo
     {

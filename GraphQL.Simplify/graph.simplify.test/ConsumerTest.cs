@@ -1,4 +1,5 @@
 using graph.simplify.consumer;
+using graph.simplify.consumer.enums;
 using System;
 using Xunit;
 
@@ -15,18 +16,19 @@ namespace graph.simplify.test
         [Fact]
         public void GraphClientTest()
         {
-            var client = new GraphClient("Address");
+            var client = new GraphClient();
+            var body = client.AppendBody("Address");
 
-            client.Body.AppendArgument("PostalCode")
+            body.AppendArgument("PostalCode")
                 .AppendCheck(OperationType.EqualTo, Statement.And, "36038-000")
                 .AppendCheck(OperationType.EqualTo, Statement.Or, "36016-410");
 
-            client.Body.QueryInfo.Limit = 2;
-            client.Body.QueryInfo.Page = 0;
+            body.QueryInfo.Limit = 2;
+            body.QueryInfo.Page = 0;
 
-            client.Body.ResultFields.Add("postalCode");
-            client.Body.ResultFields.Add("district");
-            client.Body.ResultFields.Add("fullStreetName");
+            body.ResultFields.Add("postalCode");
+            body.ResultFields.Add("district");
+            body.ResultFields.Add("fullStreetName");
 
             client.Resolve(new Uri(@"https://postalcode-api.herokuapp.com/graphql"));
 
