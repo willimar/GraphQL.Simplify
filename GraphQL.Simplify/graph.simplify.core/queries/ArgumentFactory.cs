@@ -36,7 +36,7 @@ namespace graph.simplify.core.queries
                 {
                     addArgument<DateTimeValue>(item.Name);
                 }
-                else if (item.PropertyType.BaseType.Equals(typeof(Enum)))
+                else if (item.PropertyType.BaseType != null && item.PropertyType.BaseType.Equals(typeof(Enum)))
                 {
                     addArgument<IntValue>(item.Name);
                 }
@@ -75,6 +75,10 @@ namespace graph.simplify.core.queries
                 else if (item.PropertyType.Equals(typeof(bool)))
                 {
                     addArgument<BoolValue>(item.Name);
+                }
+                else if (item.PropertyType.Equals(typeof(Guid)))
+                {
+                    addArgument<GuidValue>(item.Name);
                 }
                 else
                 {

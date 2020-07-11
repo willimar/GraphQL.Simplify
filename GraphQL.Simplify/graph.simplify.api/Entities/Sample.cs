@@ -26,5 +26,6 @@ namespace graph.simplify.api.Entities
         public short ShortProperty { get; set; }
         public string StringProperty { get; set; }
         public EnumeratorField EnumeratorProperty { get; set; }
+        public Guid GuidProperty { get; set; }
     }
 }

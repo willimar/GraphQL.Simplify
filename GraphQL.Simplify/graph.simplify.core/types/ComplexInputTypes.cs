@@ -68,6 +68,10 @@ namespace graph.simplify.core.types
                 {
                     Field<ShortGraphType>(item.Name);
                 }
+                else if (item.PropertyType.Equals(typeof(Guid)))
+                {
+                    Field<GuidGraphType>(item.Name);
+                }
                 else 
                 {
                     Field<StringGraphType>(item.Name);
