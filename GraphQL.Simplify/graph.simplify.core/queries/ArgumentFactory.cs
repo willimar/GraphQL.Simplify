@@ -76,10 +76,10 @@ namespace graph.simplify.core.queries
                 {
                     addArgument<BoolValue>(item.Name);
                 }
-                else if (item.PropertyType.Equals(typeof(Guid)))
-                {
-                    addArgument<GuidValue>(item.Name);
-                }
+                //else if (item.PropertyType.Equals(typeof(Guid)))
+                //{
+                //    addArgument<GuidValue>(item.Name);
+                //}
                 else
                 {
                     addArgument<StringValue>(item.Name);

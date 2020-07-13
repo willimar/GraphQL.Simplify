@@ -40,7 +40,7 @@ namespace graph.simplify.core
             services.AddScoped<StringValue>();
             services.AddScoped<OrderValue>();
             services.AddScoped<QueryInfoValue>();
-            services.AddScoped<GuidValue>();
+            //services.AddScoped<GuidValue>();
 
             services.AddScoped<ComplexInputTypes<BoolValue>>();
             services.AddScoped<ComplexInputTypes<ByteValue>>();
@@ -56,7 +56,7 @@ namespace graph.simplify.core
             services.AddScoped<ComplexInputTypes<StatementValue>>();
             services.AddScoped<ComplexInputTypes<StringValue>>();
             services.AddScoped<ComplexInputTypes<QueryInfoValue>>();
-            services.AddScoped<ComplexInputTypes<GuidValue>>();
+            //services.AddScoped<ComplexInputTypes<GuidValue>>();
 
             services.AddScoped<BooleanGraphType>();
             services.AddScoped<DateTimeGraphType>();
