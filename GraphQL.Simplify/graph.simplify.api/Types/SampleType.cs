@@ -26,7 +26,9 @@ namespace graph.simplify.api.Types
             Field(x => x.LongProperty).Description(string.Format(message, "long"));
             //Field(x => x.ShortProperty).Description(string.Format(message, "short"));
             Field(x => x.StringProperty).Description(string.Format(message, "string"));
+            Field(x => x.GuidProperty).Description(string.Format(message, "string"));
             Field<IntGraphType>("EnumeratorProperty", resolve: context => (int)context.Source.EnumeratorProperty, description: string.Format(message, "enumerator"));
+            //Field<StringGraphType>("GuidProperty", resolve: context => context.Source.GuidProperty.ToString(), description: string.Format(message, "string"));
 
         }
     }

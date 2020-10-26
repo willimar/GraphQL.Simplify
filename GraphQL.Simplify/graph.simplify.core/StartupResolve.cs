@@ -2,18 +2,19 @@
 using graph.simplify.core.types;
 using graph.simplify.core.values;
 using GraphQL;
-using GraphQL.Http;
+using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace graph.simplify.core
 {
     public static class StartupResolve
     {
-        public static void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices<TStartup>(IServiceCollection services)
         {
             // If using Kestrel:
             services.Configure<KestrelServerOptions>(options =>
@@ -23,7 +24,15 @@ namespace graph.simplify.core
 
             #region Dependencias
 
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddGraphQL((options, provider) =>
+            {
+                options.EnableMetrics = true;
+                var logger = provider.GetRequiredService<ILogger<TStartup>>();
+                options.UnhandledExceptionDelegate = ctx => logger.LogError("{Error} occured", ctx.OriginalException.Message);
+            })
+            // Add required services for de/serialization
+            .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { }) // For .NET Core 3+
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 
             services.AddScoped<BoolValue>();
             services.AddScoped<ByteValue>();
@@ -72,7 +81,7 @@ namespace graph.simplify.core
             services.AddScoped<EnumeratorType<Statement>>();
             services.AddScoped<EnumeratorType<Order>>();
 
-            services.AddScoped<IDocumentWriter, DocumentWriter>();
+            //services.AddScoped<IDocumentWriter, DocumentWriter>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
 
             #endregion

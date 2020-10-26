@@ -1,4 +1,5 @@
 ﻿using graph.simplify.core.enums;
+using GraphQL;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,7 @@ namespace graph.simplify.core.queries
             }
         }
 
-        public static Expression<Func<TEntity, bool>> Factory(ResolveFieldContext<object> context)
+        public static Expression<Func<TEntity, bool>> Factory(IResolveFieldContext<object> context)
         {
             var parameter = Expression.Parameter(typeof(TEntity), "p");
             var body = Expression.Equal(Expression.Constant(true), Expression.Constant(true));

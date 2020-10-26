@@ -4,7 +4,7 @@ using System.Text;
 
 namespace graph.simplify.core.values
 {
-    //public class GuidValue: BaseValue<Guid>
-    //{
-    //}
+    public class GuidValue : BaseValue<Guid>
+    {
+    }
 }

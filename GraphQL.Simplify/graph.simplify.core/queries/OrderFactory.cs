@@ -1,4 +1,5 @@
 ﻿using graph.simplify.core.enums;
+using GraphQL;
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace graph.simplify.core.queries
 {
     public class OrderFactory<TEntity> where TEntity : class
     {
-        public static List<Expression<Func<TEntity, object>>> Factory(ResolveFieldContext<object> context)
+        public static List<Expression<Func<TEntity, object>>> Factory(IResolveFieldContext<object> context)
         {
             var result = new List<Expression<Func<TEntity, object>>>();
 

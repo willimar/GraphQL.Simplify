@@ -4,11 +4,14 @@ using graph.simplify.api.Types;
 using graph.simplify.core;
 using GraphQL.Server;
 using GraphQL.Server.Internal;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace graph.simplify.api
 {
@@ -26,7 +29,7 @@ namespace graph.simplify.api
         {
             #region Depedences
 
-            StartupResolve.ConfigureServices(services);
+            StartupResolve.ConfigureServices<Startup>(services);
             services.AddScoped<IGraphQLExecuter<AppScheme<SampleQuery>>, DefaultGraphQLExecuter<AppScheme<SampleQuery>>>();
             services.AddScoped<SampleRepository>();
             services.AddScoped<SampleQuery>();
