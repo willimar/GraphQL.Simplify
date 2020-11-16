@@ -38,7 +38,7 @@ namespace graph.simplify.core.queries
                 }
                 else if (item.PropertyType.BaseType != null && item.PropertyType.BaseType.Equals(typeof(Enum)))
                 {
-                    addArgument<IntValue>(item.Name);
+                    addArgument<StringValue>(item.Name);
                 }
                 else if (item.PropertyType.Equals(typeof(decimal)))
                 {

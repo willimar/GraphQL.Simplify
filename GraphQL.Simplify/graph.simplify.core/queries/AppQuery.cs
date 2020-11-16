@@ -13,7 +13,7 @@ namespace graph.simplify.core.queries
         {
             var arguments = ArgumentFactory.Factory<TEntity>();
 
-            Field<ListGraphType<TGraphType>>(typeof(TEntity).Name,
+            Field<ListGraphType<TGraphType>>(typeof(TEntity).Name.Replace("`1", string.Empty),
                 arguments: new QueryArguments(arguments),
                 resolve: context =>
                 {

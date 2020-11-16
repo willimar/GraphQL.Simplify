@@ -117,9 +117,18 @@ namespace graph.simplify.core.queries
                         {
                             var operation = (Operation)Convert.ChangeType(fieldValue["operation"], typeof(Operation));
                             var statement = (Statement)Convert.ChangeType(fieldValue["connector"], typeof(Statement));
-                            var value = Convert.ChangeType(fieldValue["value"], fieldValue["value"]?.GetType());
-
                             var member = Expression.Property(parameter, fieldName);
+                            object value = null;
+
+                            if (member.Type.BaseType != null && member.Type.BaseType.Equals(typeof(Enum)))
+                            {
+                                value = Enum.Parse(member.Type, fieldValue["value"]?.ToString());
+                            }
+                            else
+                            {
+                                value = Convert.ChangeType(fieldValue["value"], member.Type);
+                            }
+                            
                             var constant = Expression.Constant(value);
 
                             body = GetStatement(statement, body, GetOperation(operation, member, constant));
