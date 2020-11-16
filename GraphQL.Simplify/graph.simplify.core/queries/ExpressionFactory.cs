@@ -13,15 +13,12 @@ namespace graph.simplify.core.queries
     {
         private static BinaryExpression GetStatement(Statement connector, Expression left, Expression right)
         {
-            switch (connector)
+            return connector switch
             {
-                case Statement.And:
-                    return Expression.And(left, right);
-                case Statement.Or:
-                    return Expression.Or(left, right);
-                default:
-                    return Expression.And(left, right);
-            }
+                Statement.And => Expression.And(left, right),
+                Statement.Or => Expression.Or(left, right),
+                _ => Expression.And(left, right),
+            };
         }
 
         private static BinaryExpression GetOperation(Operation operation, Expression member, Expression constant)
@@ -50,45 +47,22 @@ namespace graph.simplify.core.queries
                 return Expression.Equal(call, Expression.Constant(endsWith));
             }
 
-            //BinaryExpression getEndsWith(bool endsWith)
-            //{
-            //    var method = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
-            //    var arguments = new Expression[] { constant };
-            //    var call = Expression.Call(member, method, arguments);
-            //    return Expression.Equal(call, Expression.Constant(endsWith));
-            //}
-
-            switch (operation)
+            return operation switch
             {
-                case Operation.EqualTo:
-                    return Expression.Equal(member, constant);
-                case Operation.Contains:
-                    return getContains(true);
-                case Operation.NotContains:
-                    return getContains(false);
-                case Operation.StartsWith:
-                    return getStartWith(true);
-                case Operation.NotStartsWith:
-                    return getStartWith(false);
-                case Operation.EndsWith:
-                    return getEndsWith(true);
-                case Operation.NotEndsWith:
-                    return getEndsWith(false);
-                //case Operation.IsNullOrWhiteSpace:
-                //    return getIsNullOrWhiteSpace(true);
-                case Operation.NotEqualTo:
-                    return Expression.NotEqual(member, constant);
-                case Operation.GreaterThan:
-                    return Expression.GreaterThan(member, constant);
-                case Operation.GreaterThanOrEqualTo:
-                    return Expression.GreaterThanOrEqual(member, constant);
-                case Operation.LessThan:
-                    return Expression.LessThan(member, constant);
-                case Operation.LessThanOrEqualTo:
-                    return Expression.LessThanOrEqual(member, constant);
-                default:
-                    return Expression.Equal(member, constant);
-            }
+                Operation.EqualTo => Expression.Equal(member, constant),
+                Operation.Contains => getContains(true),
+                Operation.NotContains => getContains(false),
+                Operation.StartsWith => getStartWith(true),
+                Operation.NotStartsWith => getStartWith(false),
+                Operation.EndsWith => getEndsWith(true),
+                Operation.NotEndsWith => getEndsWith(false),
+                Operation.NotEqualTo => Expression.NotEqual(member, constant),
+                Operation.GreaterThan => Expression.GreaterThan(member, constant),
+                Operation.GreaterThanOrEqualTo => Expression.GreaterThanOrEqual(member, constant),
+                Operation.LessThan => Expression.LessThan(member, constant),
+                Operation.LessThanOrEqualTo => Expression.LessThanOrEqual(member, constant),
+                _ => Expression.Equal(member, constant),
+            };
         }
 
         public static Expression<Func<TEntity, bool>> Factory(IResolveFieldContext<object> context)

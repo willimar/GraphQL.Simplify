@@ -14,6 +14,8 @@ namespace graph.simplify.api.Queries
     {
         public SampleQuery(SampleRepository repository) : base(repository)
         {
+            this.UseAuthenticate = true;
+            this.AuthenticateApi = new Uri(@"https://authentic-api.herokuapp.com/");
         }        
     }
 }

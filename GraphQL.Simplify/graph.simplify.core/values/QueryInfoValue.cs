@@ -8,5 +8,7 @@ namespace graph.simplify.core.values
     {
         public int Limit { get; set; }
         public int Page { get; set; }
+        public string ValidateTocken { get; set; }
+        public string SystemName { get; set; }
     }
 }
